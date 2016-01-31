@@ -2,6 +2,7 @@ FractalRoot pentagon;
 int _maxlevels = 4;
 float _strutFactor = 0.2;
 float _strutNoise;
+int _numSides = 8;
 
 
 void setup() {
@@ -31,18 +32,17 @@ class PointObj {
 //====================================
 
 class FractalRoot {
-  PointObj[] pointArr = new PointObj[5];
+  PointObj[] pointArr = {};
   Branch rootBranch;
   
   FractalRoot(float startAngle) {
     float centX = width/2;
     float centY = height/2;
-    int count = 0;
-    for (int i = 0; i<360; i+=72) {
+    float angleStep = 360.0f/_numSides;
+    for (int i = 0; i<360; i+=angleStep) {
       float x = centX + (200 * cos(radians(startAngle + i)));
       float y = centY + (200 * sin(radians(startAngle + i)));
-      pointArr[count] = new PointObj(x, y);
-      count++;
+      pointArr = (PointObj[])append(pointArr, new PointObj(x, y));
     }
     rootBranch = new Branch(0, 0, pointArr);
   }
